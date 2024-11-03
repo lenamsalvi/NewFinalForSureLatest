@@ -163,3 +163,4 @@ cython_debug/
 
 config.py
 .vscode/
+species_list.xlsx
