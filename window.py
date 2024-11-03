@@ -1,17 +1,34 @@
 import tkinter as tk
+from enum import Enum
 
-WIDTH = 600
-HEIGHT = 400
+WH_SCALE = 0.6
 DEFAULT_FONT = ("Helvetica", 16)
+
+
+class PaletteOptions(Enum):
+    RED = "RED"
+    GREEN = "GREEN"
+    BLUE = "BLUE"
+    WHITE = "WHITE"
+    BLACK = "BLACK"
+    GRAY = "GRAY"
 
 
 class LandscapeDesignApp(tk.Tk):
     def __init__(self):
         super().__init__()
 
+        # Auto-scale window based on screen dimensions
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        window_width = int(screen_width * WH_SCALE)
+        window_height = int(screen_height * WH_SCALE)
+        window_x_pos = (screen_width - window_width) // 2
+        window_y_pos = (screen_height - window_height) // 2
+
         # Main window setup
         self.title("Autonomous Landscape Design")
-        self.geometry(f"{WIDTH}x{HEIGHT}")
+        self.geometry(f"{window_width}x{window_height}+{window_x_pos}+{window_y_pos}")
 
         # Build UI components
         self.create_content_frame()
@@ -39,13 +56,20 @@ class LandscapeDesignApp(tk.Tk):
         )
         control_frame_label.pack(pady=20)
 
-        control_frame_button = tk.Button(
-            self.control_frame, text="Button", command=self.on_button_click
-        )
-        control_frame_button.pack(side=tk.BOTTOM, padx=10, pady=10)
+        button_frame = tk.Frame(self.control_frame)
+        button_frame.pack(anchor="center")
 
-    def on_button_click(self):
-        print("Button clicked")
+        for color in PaletteOptions:
+            control_frame_button = tk.Button(
+                button_frame,
+                text=f"Change to {color.name}",
+                command=lambda color=color: self.generate_palette(color),
+            )
+            control_frame_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+    def generate_palette(self, color):
+        self.content_frame.config(bg=color.value)
+        print(f"# TEST - Generate a {color.name} palette")
 
 
 if __name__ == "__main__":
