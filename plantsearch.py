@@ -34,15 +34,12 @@ def search_images(species_name):
 
 # Function to download the image and save it
 def download_image(url, species_name, index, folder='PlantImages'):
-    # Create the folder if it doesn't exist
     if not os.path.exists(folder):
         os.makedirs(folder)
     
-    # Set the file name and path
     file_name = f"{species_name}_{index}.jpg"
     file_path = os.path.join(folder, file_name)
     
-    # Download the image
     response = requests.get(url)
     if response.status_code == 200:
         with open(file_path, 'wb') as file:
@@ -78,6 +75,8 @@ def load_species_list(file_path):
     return species_list
 
 if __name__ == '__main__':
+    # TODO
+    # species_inventory = "species_inventory.xlsx"
     species_inventory = "C:\\Users\\PeePee PooPoo\\Desktop\\PlantInventory\\species_inventory.xlsx"
     species_list = load_species_list(species_inventory)
     download_images_for_species_list(species_list)
