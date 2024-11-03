@@ -1,6 +1,5 @@
 import pygame
 import random
-import time
 
 # Globals
 REFERSH_RATE_HZ = 60

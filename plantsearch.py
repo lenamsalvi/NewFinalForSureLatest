@@ -61,10 +61,10 @@ def download_images_for_species_list(species_list):
             if (len(image_urls) == 0):
                 print("# ERROR: No image URLs returned for species: {}".format(species))
             
-            total_requests += 1  # Increment for each search request
+            total_requests += 1
             
             for index, url in enumerate(image_urls):
-                print(f"Image URL: {url}")  # Print the image URL
+                print(f"Image URL: {url}")
                 download_image(url, species, index + 1)
         except Exception as e:
             print(f"Error with species {species}: {e}")
@@ -73,16 +73,11 @@ def download_images_for_species_list(species_list):
 
 # Load the Excel file and extract species names
 def load_species_list(file_path):
-    df = pd.read_excel(file_path)
-    species_list = df['Species'].tolist()  # Make sure this column name matches your Excel sheet
+    excel_file = pd.read_excel(file_path)
+    species_list = excel_file['Species'].tolist()  # Make sure this column name matches your Excel sheet
     return species_list
 
 if __name__ == '__main__':
-    # Path to your Excel file with species names
-    file_path = "C:\\Users\\PeePee PooPoo\\Desktop\\PlantInventory\\species_inventory.xlsx"  # Update this with the correct Excel file path
-    
-    # Load the species names from Excel
-    species_list = load_species_list(file_path)
-    
-    # Download images for each species
+    species_inventory = "C:\\Users\\PeePee PooPoo\\Desktop\\PlantInventory\\species_inventory.xlsx"
+    species_list = load_species_list(species_inventory)
     download_images_for_species_list(species_list)
